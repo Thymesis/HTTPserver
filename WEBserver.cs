@@ -32,7 +32,8 @@ namespace Server
 
         public void HandlerThread (object client)
         {
-            new Handler((TcpClient)client);
+            Handler h = new Handler();
+            h.Start((TcpClient)client);
         }
 
         static void Main(string[] args)

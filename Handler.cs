@@ -14,7 +14,7 @@ namespace Server
         byte[] bufferin = new byte[1024]; // buffer input data
         byte[] bufferout = new byte[1024]; // buffer output data
         
-        public Handler (TcpClient client)
+        public void Start (TcpClient client)
         {   
             while (client.GetStream().Read(bufferin, 0, 1024)>0)
             {
@@ -93,17 +93,17 @@ namespace Server
         }
         private void Error (TcpClient client, int code)
         {
-            string html = "HTTP / 1.1 400 Bad Request \nContent-type:text/html\n\n\n";
-            string html1 = "HTTP / 1.1 404 Not Found \nContent-type:text/html\n\n\n";
+            string htmlerror400 = "HTTP / 1.1 400 Bad Request \nContent-type:text/html\n\n\n";
+            string htmlerror404 = "HTTP / 1.1 404 Not Found \nContent-type:text/html\n\n\n";
             if (code == 400)
             {
-                byte[] bufferout = Encoding.ASCII.GetBytes(html);
+                byte[] bufferout = Encoding.ASCII.GetBytes(htmlerror400);
                 NetworkStream stream = client.GetStream();
                 stream.Write(bufferout, 0, 1024);
             }
             if (code == 404)
             {
-                byte[] bufferout = Encoding.ASCII.GetBytes(html1);
+                byte[] bufferout = Encoding.ASCII.GetBytes(htmlerror404);
                 NetworkStream stream = client.GetStream();
                 stream.Write(bufferout, 0, 1024);
             }         
